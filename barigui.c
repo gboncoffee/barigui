@@ -149,7 +149,7 @@ void render_right_bar(Wm *wm)
 
 	if (wm->status != NULL) {
 		drw_font_getexts(bar->font, wm->status, strlen(wm->status), &w, &h);
-		XMoveResizeWindow(wm->dpy, bar->win, wm->sw - w - BORDER_WIDTH * 2, BORDER_WIDTH, w, h);
+		XMoveResizeWindow(wm->dpy, bar->win, wm->sw - w - BORDER_WIDTH * 2, 0, w, h);
 		drw_resize(bar->drw, w, h);
 		drw_text(bar->drw, 0, 0, w, h, 0, wm->status, 0);
 		drw_map(bar->drw, bar->win, 0, 0, w, h);
@@ -183,7 +183,7 @@ void render_left_bar(Wm *wm, short int opened)
 		totw += items[i].w;
 	}
 
-	XMoveResizeWindow(wm->dpy, bar->win, BORDER_WIDTH, BORDER_WIDTH, totw, toth);
+	XMoveResizeWindow(wm->dpy, bar->win, 0, 0, totw, toth);
 	drw_resize(bar->drw, totw, toth);
 	drw_text(bar->drw, 0, 0, wm->hid_w, toth, 0, hidt, 0);
 	drw_text(bar->drw, wm->hid_w, 0, wm->spawn_w, toth, 0, spawnt, 0);
@@ -252,15 +252,15 @@ void restore_focus(Wm *wm)
 		XMoveResizeWindow(
 			wm->dpy,
 			wm->tiled->id,
-			BORDER_WIDTH,
-			wm->bar_h + BORDER_WIDTH * 3,
+			0,
+			wm->bar_h + BORDER_WIDTH * 2,
 			wm->sw - BORDER_WIDTH * 4 - TITLE_WIDTH,
 			wm->sh - wm->bar_h - BORDER_WIDTH * 4);
 		XMoveResizeWindow(
 			wm->dpy,
 			wm->tiled->title,
-			wm->sw - BORDER_WIDTH - TITLE_WIDTH,
-			wm->bar_h + BORDER_WIDTH * 3,
+			wm->sw - BORDER_WIDTH * 2 - TITLE_WIDTH,
+			wm->bar_h + BORDER_WIDTH * 2,
 			TITLE_WIDTH,
 			wm->sh - wm->bar_h - BORDER_WIDTH * 4);
 		render_title(wm, wm->tiled, 0);
@@ -270,21 +270,21 @@ void restore_focus(Wm *wm)
 	XMoveResizeWindow(
 		wm->dpy,
 		wm->tiled->id,
-		BORDER_WIDTH,
-		wm->bar_h + BORDER_WIDTH * 3,
+		0,
+		wm->bar_h + BORDER_WIDTH * 2,
 		wm->sw / 2 - BORDER_WIDTH * 4 - TITLE_WIDTH,
 		wm->sh - wm->bar_h - BORDER_WIDTH * 4);
 	XMoveResizeWindow(
 		wm->dpy,
 		wm->tiled->title,
-		wm->sw / 2 - BORDER_WIDTH - TITLE_WIDTH,
-		wm->bar_h + BORDER_WIDTH * 3,
+		wm->sw / 2 - BORDER_WIDTH * 2 - TITLE_WIDTH,
+		wm->bar_h + BORDER_WIDTH * 2,
 		TITLE_WIDTH,
 		wm->sh - wm->bar_h - BORDER_WIDTH * 4);
 	render_title(wm, wm->tiled, 0);
 
 	height = (wm->sh - (wm->bar_h + BORDER_WIDTH * 2)) / (wm->n_tiled - 1);
-	title_x = wm->sw - BORDER_WIDTH - TITLE_WIDTH;
+	title_x = wm->sw - BORDER_WIDTH * 2 - TITLE_WIDTH;
 
 	i = 0;
 	for (c = wm->tiled->next; c != NULL; c = c->next) {
@@ -293,15 +293,15 @@ void restore_focus(Wm *wm)
 		XMoveResizeWindow(
 			wm->dpy,
 			c->id,
-			wm->sw / 2 + BORDER_WIDTH,
-			height * i + BORDER_WIDTH + (wm->bar_h + BORDER_WIDTH * 2),
-			title_x - (wm->sw / 2 + BORDER_WIDTH),
+			wm->sw / 2,
+			height * i + (wm->bar_h + BORDER_WIDTH * 2),
+			title_x - (wm->sw / 2 + BORDER_WIDTH * 2),
 			height - BORDER_WIDTH * 2);
 		XMoveResizeWindow(
 			wm->dpy,
 			c->title,
 			title_x,
-			height * i + BORDER_WIDTH + (wm->bar_h + BORDER_WIDTH * 2),
+			height * i + (wm->bar_h + BORDER_WIDTH * 2),
 			TITLE_WIDTH,
 			height - BORDER_WIDTH * 2);
 		render_title(wm, c, 0);
@@ -323,7 +323,7 @@ void fullscreen(Wm *wm)
 
 	if (wm->current == NULL)
 		return;
-	XMoveResizeWindow(wm->dpy, wm->current->id, 0, 0, wm->sw, wm->sh);
+	XMoveResizeWindow(wm->dpy, wm->current->id, -BORDER_WIDTH, -BORDER_WIDTH, wm->sw, wm->sh);
 	XRaiseWindow(wm->dpy, wm->current->id);
 
 	for (;;) {
@@ -441,7 +441,7 @@ void hidden_window(Wm *wm)
 	XMapRaised(wm->dpy, wm->menu.win);
 
 	XGetGeometry(wm->dpy, wm->left_bar.win, &_dumbw, &_dumbi, &_dumbi, &w, &h, &_dumbu, &_dumbu);
-	x = BORDER_WIDTH;
+	x = 0;
 	y = h + BORDER_WIDTH * 2;
 	h = h * wm->n_hidden;
 	XMoveResizeWindow(wm->dpy, wm->menu.win, x, y, w, h);
@@ -539,7 +539,7 @@ void spawn_window(Wm *wm)
 	XMapRaised(wm->dpy, wm->menu.win);
 
 	XGetGeometry(wm->dpy, wm->left_bar.win, &_dumbw, &_dumbi, &_dumbi, &w, &h, &_dumbu, &_dumbu);
-	x = BORDER_WIDTH;
+	x = 0;
 	y = h + BORDER_WIDTH * 2;
 	h = h * LENGTH(spawn_items);
 	XMoveResizeWindow(wm->dpy, wm->menu.win, x, y, w, h);
