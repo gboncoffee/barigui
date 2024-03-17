@@ -11,7 +11,7 @@ static const char *color_f[2] = { "#eaffea", "#448844" };
 #define CLOSE_BUTTON_COLOR 0xffaaaa
 #define HIDE_BUTTON_COLOR 0x4488ee
 /* Idk if it's really necessary, just put the same as the DRW. */
-#define BAR_BACKGROUND 0x000000
+#define BAR_BACKGROUND 0xeaffea
 
 /* Just comment out this def if you don't want background setting (so you can
  * set a background with other application). */

@@ -1087,6 +1087,7 @@ void property_change(Wm *wm, XEvent *ev)
 		if (r.c != NULL && !r.is_title) {
 			if (r.c->name != NULL)
 				XFree(r.c->name);
+			r.c->name = NULL;
 			if (XGetWMName(wm->dpy, r.c->id, &prop))
 				r.c->name = (char*) prop.value;
 		}
