@@ -209,9 +209,9 @@ void render_title(Wm *wm, Client *c, short int focus)
 	XGetGeometry(wm->dpy, c->title, &_dumbw, &_dumbi, &_dumbi, &w, &h, &_dumbu, &_dumbu);
 
 	XSetForeground(wm->dpy, c->title_gc, CLOSE_BUTTON_COLOR);
-	XFillRectangle(wm->dpy, c->title, c->title_gc, 0, 0, w, w);
+	XFillRectangle(wm->dpy, c->title, c->title_gc, 0, 0, w, w * 3);
 	XSetForeground(wm->dpy, c->title_gc, HIDE_BUTTON_COLOR);
-	XFillRectangle(wm->dpy, c->title, c->title_gc, 0, h - w, w, w);
+	XFillRectangle(wm->dpy, c->title, c->title_gc, 0, h - w * 3, w, w * 3);
 }
 
 void restore_focus(Wm *wm)
@@ -944,12 +944,12 @@ void title_click(Wm *wm, Client *c, XButtonEvent *e)
 
 	XGetGeometry(wm->dpy, c->title, &_dumbw, &_dumbi, &_dumbi, &w, &h, &_dumbu, &_dumbu);
 
-	if (e->y <= w) {
+	if (e->y <= w * 3) {
 		if (e->button == Button3)
 			XKillClient(wm->dpy, c->id);
 		else
 			hide_client(wm, c);
-	} else if (e->y >= h - w) {
+	} else if (e->y >= h - w * 3) {
 		for (i = wm->tiled; i != NULL; i = i->next) {
 			if (i == c) {
 				zoom_tiled_client(wm, c);

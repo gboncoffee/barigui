@@ -1,23 +1,24 @@
-static const char *font[] = { "Liberation Mono:size=12" };
+static const char *font[] = { "Liberation Sans:size=12" };
 
 /* DRW colors, so hex strings. */
-static const char *color[2] = { "#000000", "#eaffea" };
-static const char *color_f[2] = { "#eaffea", "#448844" };
+static const char *color[2] = { "#000000", "#eaffff" };
+static const char *color_f[2] = { "#000000", "#9eeeee" };
 
 /* Hex numbers (RGB). */
-#define BORDER_COLOR 0x52aaad
-#define TITLE_COLOR 0xffffea
-#define TITLE_FOCUS_COLOR 0xeaffea
+/* #define BORDER_COLOR 0x52aaad */
+#define BORDER_COLOR 0x000000
+#define TITLE_COLOR 0xeaffff
+#define TITLE_FOCUS_COLOR 0xffffea
 #define CLOSE_BUTTON_COLOR 0xffaaaa
 #define HIDE_BUTTON_COLOR 0x4488ee
 /* Idk if it's really necessary, just put the same as the DRW. */
-#define BAR_BACKGROUND 0xeaffea
+#define BAR_BACKGROUND 0xeaffff
 
 /* Just comment out this def if you don't want background setting (so you can
  * set a background with other application). */
-#define BACKGROUND 0x757373
+#define BACKGROUND 0xeaffff
 
-#define TITLE_WIDTH 15
+#define TITLE_WIDTH 8
 /* Pixels. You probably want just 1 as you have the title. */
 #define BORDER_WIDTH 1
 
